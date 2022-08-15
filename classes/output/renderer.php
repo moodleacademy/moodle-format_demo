@@ -15,21 +15,20 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package    format_demo
- * @copyright  2022 Your name <youremail>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-defined('MOODLE_INTERNAL') || die();
-require_once($CFG->dirroot.'/course/format/topics/renderer.php');
-
-/**
  * Basic renderer for topics format.
  *
- * @copyright 2012 Dan Poltawski
+ * @package    format_demo
+ * @copyright  2022 Your name <youremail>
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class format_demo_renderer extends format_topics_renderer {
+
+namespace format_demo\output;
+
+use moodle_page;
+use context_course;
+use completion_info;
+
+class renderer extends \format_topics\output\renderer {
 
     /**
      * Constructor method, calls the parent constructor

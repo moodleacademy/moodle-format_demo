@@ -1,0 +1,11 @@
+.quickpost-box a.heading::before {
+    font-family: "FontAwesome";
+    content: '\f0a1';
+    margin-right: 3px;
+}
+
+.quickpost-box a.heading[aria-expanded="true"]::before {
+    font-family: "FontAwesome";
+    content: '\f078';
+    margin-right: 3px;
+}

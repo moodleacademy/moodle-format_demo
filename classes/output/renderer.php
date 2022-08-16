@@ -48,6 +48,7 @@ class renderer extends \format_topics\output\renderer {
         $widget = new $outputclass($format);
 
         $data = $widget->export_for_template($this);
+        $data->quicknews = format_demo_quick_news_block($this->page->course);
 
         return $this->render_from_template('format_demo/local/content', $data);
    }

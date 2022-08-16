@@ -64,8 +64,9 @@ function format_demo_quick_news_block($course) {
     $groupmode = 0; // No groups.
 	$currentgroup = -1;
 
-	echo html_writer::start_tag('div', array('class' => 'quickpost-box mb-1'));
-	echo html_writer::start_tag('div', array('class' => 'head'))
+	$html = '';
+	$html .= html_writer::start_tag('div', array('class' => 'quickpost-box mb-1'));
+	$html .= html_writer::start_tag('div', array('class' => 'head'))
 		. html_writer::tag('a', get_string('namenews', 'forum'),
 			array('class' => 'heading',
 				'data-toggle' => 'collapse',
@@ -73,7 +74,7 @@ function format_demo_quick_news_block($course) {
 		. html_writer::end_tag('div');
 
     if (forum_user_can_post_discussion($forum, null, $groupmode, $cm, $context)) {
-		echo html_writer::start_tag('div',
+		$html .= html_writer::start_tag('div',
 			array('class' => 'quickpost-form collapse', 'id' => 'collapseAddForm'));
 
 		$mform = new format_demo_announcement_form($CFG->wwwroot . '/course/format/demo/announcement_post.php',
@@ -84,12 +85,12 @@ function format_demo_quick_news_block($course) {
 			],
 			'post', '', array('id' => 'mformforum'));
 
-		$mform->display();
+		$html .= $mform->render();
 
-		echo html_writer::end_tag('div');
+		$html .= html_writer::end_tag('div');
 	}
 
-	echo html_writer::start_tag('div', array('class' => 'quickpost-items px-3 py-2'));
+	$html .= html_writer::start_tag('div', array('class' => 'quickpost-items px-3 py-2'));
 
 	/// Get all the recent discussions we're allowed to see
 
@@ -102,7 +103,7 @@ function format_demo_quick_news_block($course) {
 
 	if (! $discussions = forum_get_discussions($cm, $sort, true, -1, $course->newsitems,
                             false, -1, 0, FORUM_POSTS_ALL_USER_GROUPS) ) {
-        echo get_string('nonews', 'forum');
+        $html .= get_string('nonews', 'forum');
 	}
 
 	$strftimerecent = get_string('strftimerecent');
@@ -213,19 +214,21 @@ function format_demo_quick_news_block($course) {
 	$tabcontents .=  html_writer::end_tag('div');
 	$tabs .= html_writer::end_tag('ul');
 
-	echo $tabs;
-	echo $tabcontents;
+	$html .= $tabs;
+	$html .= $tabcontents;
 
-	echo html_writer::end_tag('div');
-	echo html_writer::end_tag('div');
+	$html .= html_writer::end_tag('div');
+	$html .= html_writer::end_tag('div');
 
 	if ($discussions) {
-		echo html_writer::start_tag('div', array('class' => 'quickpost-more'));
-		echo html_writer::link(new moodle_url('/mod/forum/view.php',
+		$html .= html_writer::start_tag('div', array('class' => 'quickpost-more'));
+		$html .= html_writer::link(new moodle_url('/mod/forum/view.php',
 			array('f' => $forum->id)),
 			html_writer::tag('span', get_string('viewolderpost', 'format_demo'),
 				array('class' => 'btn btn-link')),
 			array());
-		echo html_writer::end_tag('div');
+		$html .= html_writer::end_tag('div');
 	}
+
+	return $html;
 }

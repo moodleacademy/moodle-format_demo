@@ -42,6 +42,16 @@ class renderer extends \format_topics\output\renderer {
         $this->courserenderer = new \format_demo\course_renderer($page, $target);
     }
 
+    public function render_content($output) {
+        $format = course_get_format($this->page->course->id);
+        $outputclass = $format->get_output_classname('content');
+        $widget = new $outputclass($format);
+
+        $data = $widget->export_for_template($this);
+
+        return $this->render_from_template('format_demo/local/content', $data);
+   }
+
     /**
      * Output the html for a multiple section page
      *

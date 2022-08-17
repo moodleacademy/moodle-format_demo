@@ -42,11 +42,7 @@ class renderer extends \format_topics\output\renderer {
         $this->courserenderer = new \format_demo\course_renderer($page, $target);
     }
 
-    public function render_content($output) {
-        $format = course_get_format($this->page->course->id);
-        $outputclass = $format->get_output_classname('content');
-        $widget = new $outputclass($format);
-
+    public function render_content($widget) {
         $data = $widget->export_for_template($this);
         $data->quicknews = format_demo_quick_news_block($this->page->course);
 

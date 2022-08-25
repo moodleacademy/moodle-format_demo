@@ -24,8 +24,6 @@
 
 namespace format_demo\output;
 
-use core_courseformat\output\section_renderer;
-
-class renderer extends section_renderer {
+class renderer extends \format_topics\output\renderer {
 
 }
